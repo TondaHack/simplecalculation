@@ -7,9 +7,7 @@ export default (state = new Map(Immutable.fromJS(defaultTree)), action) => {
     case constants.SET_RESULT: {
       const { historyLiteral, data } = action;
 
-      return state
-        .setIn(['history', historyLiteral], Immutable.fromJS(data))
-        .set('result', Immutable.fromJS(data));
+      return state.setIn(['history', historyLiteral], Immutable.fromJS(data));
     }
     case constants.SET_AMOUNT:
       return state.setIn(['values', 'amount'], action.amount);

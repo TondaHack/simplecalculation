@@ -15,22 +15,13 @@ export function getDefaultData(dispatch) {
 export function calculate(dispatch, params, history) {
   const { amount, term } = params;
   const url = `${config.host}/real-first-loan-offer?amount=${amount}&term=${term}`;
-  const datetime = new Date().getTime();
   const historyLiteral = `${amount}-${term}`;
   const findedInHistory = history.get(historyLiteral);
 
-  if (findedInHistory) {
-    dispatch({
-      historyLiteral,
-      datetime,
-      data: findedInHistory,
-      type: constants.SET_RESULT,
-    });
-  } else {
+  if (!findedInHistory) {
     window.fetch(url).then(response => response.json())
       .then(data => dispatch({
         historyLiteral,
-        datetime,
         data,
         type: constants.SET_RESULT,
       }));
