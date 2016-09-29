@@ -10,72 +10,76 @@ import { numberify } from '../../helpers/format';
 class ListContainer extends React.Component {
   handleAmount = (e) => {
     const amount = numberify(e.target.value);
-    const { setAmountValue, calcData } = this.props;
+    const { setAmountValue, term } = this.props;
 
     setAmountValue(amount);
-    this.calculate(amount, calcData.getIn(['values', 'term']));
+    this.calculate(amount, term);
   };
 
   handleTerm = (e) => {
     const term = numberify(e.target.value);
-    const { setTermValue, calcData } = this.props;
+    const { setTermValue, amount } = this.props;
 
     setTermValue(term);
-    this.calculate(calcData.getIn(['values', 'amount']), term);
+    this.calculate(amount, term);
   };
 
   calculate = (amount, term) => {
-    this.props.calculate({
+    const { history, calculateValues } = this.props;
+
+    calculateValues({
       amount,
       term,
-    });
+    }, history);
   };
 
   render() {
-    const { calcData } = this.props;
-    const amountInterval = calcData.getIn(['intervals', 'amountInterval']);
-    const amount = calcData.getIn(['values', 'amount']);
-    const term = calcData.getIn(['values', 'term']);
-    const termInterval = calcData.getIn(['intervals', 'termInterval']);
+    const { termInterval, amountInterval, amount, term, history } = this.props;
+    const historyItem = history.get(`${amount}-${term}`);
 
     return (
       <Grid>
         <RangeInput
-          min={amountInterval.get('min')}
-          max={amountInterval.get('max')}
+          data={amountInterval}
           value={amount}
-          step={amountInterval.get('step')}
           calculate={this.handleAmount}
         />
 
         <RangeInput
-          min={termInterval.get('min')}
-          max={termInterval.get('max')}
+          data={termInterval}
           value={term}
-          step={termInterval.get('step')}
           calculate={this.handleTerm}
         />
-        <ResultTable dataSet={calcData.get('result')} />
+        <ResultTable dataSet={historyItem} />
       </Grid>
     );
   }
 }
 
 ListContainer.propTypes = {
-  calculate: React.PropTypes.func.isRequired,
+  calculateValues: React.PropTypes.func.isRequired,
   setAmountValue: React.PropTypes.func.isRequired,
   setTermValue: React.PropTypes.func.isRequired,
-  calcData: ImmutablePropTypes.map,
+  termInterval: ImmutablePropTypes.map,
+  amountInterval: ImmutablePropTypes.map,
+  history: ImmutablePropTypes.map,
+  amount: React.PropTypes.number.isRequired,
+  term: React.PropTypes.number.isRequired,
 };
 
 const state = calcData => ({
+  amountInterval: calcData.getIn(['intervals', 'amountInterval']),
+  termInterval: calcData.getIn(['intervals', 'termInterval']),
+  amount: calcData.getIn(['values', 'amount']),
+  term: calcData.getIn(['values', 'term']),
+  history: calcData.get('history'),
   calcData,
 });
 
 const dispatchCalculator = dispatch => ({
   setAmountValue: param => dispatch(setAmount(param)),
   setTermValue: param => dispatch(setTerm(param)),
-  calculate: params => calculate(dispatch, params),
+  calculateValues: (params, history) => calculate(dispatch, params, history),
 });
 
 export default connect(state, dispatchCalculator)(ListContainer);

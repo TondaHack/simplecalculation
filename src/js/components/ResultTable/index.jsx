@@ -1,5 +1,6 @@
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { Map } from 'immutable';
 import './style.css';
 import { roundToDecimal } from '../../helpers/format';
 
@@ -33,7 +34,11 @@ const ResultTable = (props) => {
 };
 
 ResultTable.propTypes = {
-  dataSet: ImmutablePropTypes.map.isRequired,
+  dataSet: ImmutablePropTypes.map,
+};
+
+ResultTable.defaultProps = {
+  dataSet: new Map({}),
 };
 
 export default ResultTable;

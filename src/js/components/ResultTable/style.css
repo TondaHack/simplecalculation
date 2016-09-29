@@ -1,4 +1,4 @@
-@custom-media --small-viewport (min-width: 60em);
+@custom-media --big-viewport (min-width: 60em);
 
 .result-table {
     display: table;
@@ -8,8 +8,7 @@
     font-weight: bold;
 }
 
-
-@media (--small-viewport) {
+@media (--big-viewport) {
     .result-table {
         width: 50%;
         margin: auto;
