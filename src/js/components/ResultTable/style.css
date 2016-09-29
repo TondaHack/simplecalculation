@@ -12,6 +12,7 @@
 @media (--small-viewport) {
     .result-table {
         width: 50%;
+        margin: auto;
     }
 }
 
