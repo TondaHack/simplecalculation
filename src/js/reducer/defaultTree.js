@@ -12,14 +12,15 @@ export default {
     },
   },
   result: {
-    totalPrincipal: 1000,
-    term: 5,
-    totalCostOfCredit: 100,
-    totalRepayableAmount: 1200,
-    monthlyPayment: 240,
+    totalPrincipal: 0,
+    term: 0,
+    totalCostOfCredit: 0,
+    totalRepayableAmount: 0,
+    monthlyPayment: 0,
   },
   values: {
     amount: 0,
     term: 0,
   },
+  history: {},
 };

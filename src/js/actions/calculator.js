@@ -12,14 +12,29 @@ export function getDefaultData(dispatch) {
     }));
 }
 
-export function calculate(dispatch, params) {
-  const url = `${config.host}/first-loan-offer?amount=${params.amount}&term=${params.term}`;
+export function calculate(dispatch, params, history) {
+  const { amount, term } = params;
+  const url = `${config.host}/real-first-loan-offer?amount=${amount}&term=${term}`;
+  const datetime = new Date().getTime();
+  const historyLiteral = `${amount}-${term}`;
+  const findedInHistory = history.get(historyLiteral);
 
-  window.fetch(url).then(response => response.json())
-    .then(data => dispatch({
-      data,
+  if (findedInHistory) {
+    dispatch({
+      historyLiteral,
+      datetime,
+      data: findedInHistory,
       type: constants.SET_RESULT,
-    }));
+    });
+  } else {
+    window.fetch(url).then(response => response.json())
+      .then(data => dispatch({
+        historyLiteral,
+        datetime,
+        data,
+        type: constants.SET_RESULT,
+      }));
+  }
 }
 
 export function setAmount(amount) {

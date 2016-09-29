@@ -1,23 +1,20 @@
 import React, { PropTypes } from 'react';
 import { Slider, Cell, Grid } from 'react-mdl';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import './style.css';
 
 export default class RangeInput extends React.Component {
   static propTypes = {
-    min: PropTypes.number,
-    max: PropTypes.number,
-    step: PropTypes.number,
+    data: ImmutablePropTypes.map,
     value: PropTypes.number,
     calculate: PropTypes.func,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   selectOptions() {
-    const { min, max, step } = this.props;
+    const { data } = this.props;
+    const min = data.get('min');
+    const max = data.get('max');
+    const step = data.get('step');
     const list = [];
 
     for (let i = min; i <= max; i += step) {
@@ -30,7 +27,7 @@ export default class RangeInput extends React.Component {
   }
 
   render() {
-    const { min, max, step, calculate, value } = this.props;
+    const { calculate, value, data } = this.props;
     const options = this.selectOptions();
 
     return (
@@ -43,18 +40,18 @@ export default class RangeInput extends React.Component {
           </div>
         </header>
         <Grid>
-          <Cell col={2}>{min}</Cell>
+          <Cell col={2}>{data.get('min')}</Cell>
           <Cell col={8}>
             <Slider
+              min={data.get('min')}
+              max={data.get('max')}
+              step={data.get('step')}
               type="range"
               value={value}
-              min={min}
-              max={max}
-              step={step}
               onChange={calculate}
             />
           </Cell>
-          <Cell col={2}>{max}</Cell>
+          <Cell col={2}>{data.get('max')}</Cell>
         </Grid>
       </Cell>
     );
