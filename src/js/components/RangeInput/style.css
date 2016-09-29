@@ -6,9 +6,6 @@ margin: auto;
     margin-bottom: 2em;
 }
 
-/* ==========  Select Field ========== */
-
-/* Style Select Field */
 select {
     font-family: inherit;
     background-color: transparent;
