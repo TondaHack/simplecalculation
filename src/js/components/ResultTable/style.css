@@ -1,0 +1,29 @@
+@custom-media --small-viewport (min-width: 60em);
+
+.result-table {
+    display: table;
+    width: 100%;
+    clear: both;
+    line-height: 2em;
+    font-weight: bold;
+}
+
+
+@media (--small-viewport) {
+    .result-table {
+        width: 50%;
+    }
+}
+
+.result-table .row{
+    display: table-row;
+}
+
+.result-table .cell{
+    display: table-cell;
+    width: 50%;
+}
+
+.result-table .cell-right{
+    text-align: right;
+}

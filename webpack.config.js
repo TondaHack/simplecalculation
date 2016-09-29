@@ -36,11 +36,6 @@ module.exports = {
   },
   module: {
     preLoaders: [
-      //   {
-      //     test: /\.jsx?$/,
-      //     exclude: /node_modules/,
-      //     loader: 'jscs-loader'
-      // },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -59,10 +54,10 @@ module.exports = {
       //     test: /\.(png|jpg|gif)$/,
       //     loader: 'file-loader?name=img/img-[hash:6].[ext]'
       // },
-      // {
-      //     test: /\.json$/,
-      //     loader: 'json-loader'
-      // },
+      {
+          test: /\.json$/,
+          loader: 'json-loader'
+      },
       // {
       //     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?mimetype=image/svg+xml'
       // },
